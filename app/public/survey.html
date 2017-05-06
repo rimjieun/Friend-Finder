@@ -14,35 +14,28 @@
 <body>
 
   <style>
-
     select {
       width: 170px !important;
     }
-
     footer {
       margin: 20px 0;
     }
-
     button {
       margin-top: 20px;
     }
-
   </style>
 
-  <div class="container">
-    
+  <div class="container"> 
     <h1 class="text-center"><strong>Survey Questions</strong></h1><hr>
-
     <form>
-
         <div class="user-form">
           <h2><strong>About You</strong></h2>
           <label for="inputdefault"><h4>Name (Required)</h4></label>
-          <input class="form-control input-name" id="inputdefault" type="text">
+          <input class="form-control" id="input-name" type="text">
           <label for="inputdefault"><h4>Link to Photo (Required)</h4></label>
-          <input class="form-control input-photo" id="inputdefault" type="text">
-        </div><hr>
-
+          <input class="form-control input-photo" id="input-photo" type="text">
+        </div>
+        <hr>
         <div class="survey-form">
           <label for="q1"><h2><strong>Question 1</strong></h2></label>
           <select class="form-control" id="q1">
@@ -53,7 +46,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q2"><h2><strong>Question 2</strong></h2></label>
           <select class="form-control" id="q2">
             <option value="" selected disabled>Please select</option>
@@ -63,7 +55,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q3"><h2><strong>Question 3</strong></h2></label>
           <select class="form-control" id="q3">
             <option value="" selected disabled>Please select</option>
@@ -73,7 +64,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q4"><h2><strong>Question 4</strong></h2></label>
           <select class="form-control" id="q4">
             <option value="" selected disabled>Please select</option>
@@ -83,7 +73,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q5"><h2><strong>Question 5</strong></h2></label>
           <select class="form-control" id="q5">
             <option value="" selected disabled>Please select</option>
@@ -93,7 +82,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q6"><h2><strong>Question 6</strong></h2></label>
           <select class="form-control" id="q6">
             <option value="" selected disabled>Please select</option>
@@ -103,7 +91,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q7"><h2><strong>Question 7</strong></h2></label>
           <select class="form-control" id="q7">
             <option value="" selected disabled>Please select</option>
@@ -113,7 +100,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q8"><h2><strong>Question 8</strong></h2></label>
           <select class="form-control" id="q8">
             <option value="" selected disabled>Please select</option>
@@ -123,7 +109,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q9"><h2><strong>Question 9</strong></h2></label>
           <select class="form-control" id="q9">
             <option value="" selected disabled>Please select</option>
@@ -133,7 +118,6 @@
             <option data-value="4">4</option>
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
-
           <label for="q10"><h2><strong>Question 10</strong></h2></label>
           <select class="form-control" id="q10">
             <option value="" selected disabled>Please select</option>
@@ -144,19 +128,48 @@
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
         </div>
-
-        <button type="submit" class="btn btn-primary btn-block btn-lg">Submit</button>
-    
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit">Submit</button>
     </form>
-
     <hr>
-
     <footer class="footer">
       <a href="/api/friends">API Friends List</a> |
       <a href="">GitHub Repo</a>
     </footer>
-
   </div>
   
+  <script>
+
+    $("#submit").on("click", function(e) {
+
+      e.preventDefault();
+
+      var newFriend = {
+        name: $("#input-name").val().trim(),
+        photoURL: $("#input-photo").val().trim(),
+        scores: []
+      };
+
+      $("select > option:selected").each(function() {
+        newFriend.scores.push($(this).attr("data-value"));
+      });
+
+      $.post("/api/new/friend", newFriend, function(data) {
+        if (data) {
+          console.log(true);
+        }
+        else {
+          console.log(false);
+        }
+      });
+
+      // $.get("/api/bestmatch", function(data) {
+      //   console.log(data);
+      // });
+
+    });
+    
+
+  </script>
+
 </body>
 </html>
