@@ -15,30 +15,23 @@
 
   <style>
 
-    .user-form {
-      padding-bottom: 20px;
-      margin: 10px 0;
-      border-top: 1px solid lightgrey;
-      border-bottom: 1px solid lightgrey;
-    }
-
-    .survey-form {
-      margin-bottom: 50px;
-    }
-
     select {
       width: 170px !important;
     }
 
     footer {
-      margin: 50px 0;
+      margin: 20px 0;
+    }
+
+    button {
+      margin-top: 20px;
     }
 
   </style>
 
   <div class="container">
     
-    <h1 class="text-center"><strong>Survey Questions</strong></h1>
+    <h1 class="text-center"><strong>Survey Questions</strong></h1><hr>
 
     <form>
 
@@ -48,7 +41,7 @@
           <input class="form-control input-name" id="inputdefault" type="text">
           <label for="inputdefault"><h4>Link to Photo (Required)</h4></label>
           <input class="form-control input-photo" id="inputdefault" type="text">
-        </div>
+        </div><hr>
 
         <div class="survey-form">
           <label for="q1"><h2><strong>Question 1</strong></h2></label>
@@ -155,6 +148,8 @@
         <button type="submit" class="btn btn-primary btn-block btn-lg">Submit</button>
     
     </form>
+
+    <hr>
 
     <footer class="footer">
       <a href="/api/friends">API Friends List</a> |
