@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Friend Finder</title>
+
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <!-- <script src="https://code.jquery.com/jquery.js"></script> -->
+  
 </head>
 <body>
 
-<h1>Friend Finder</h1>
-<a href="/survey"><input type="button" value="Go to Survey"></a>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Friend Finder</h1>
+      <p>Take this short survey to see who thinks like you!</p>
+      <p><a class="btn btn-primary btn-lg" href="/survey" role="button">Take Survey</a></p>
+    </div>
+    <footer class="footer">
+      <a href="/api/friends">API Friends List</a> |
+      <a href="">GitHub Repo</a>
+    </footer>
+  </div>
+
+  
   
 </body>
 </html>
