@@ -169,9 +169,26 @@
   
   <script>
 
+    function isValid(name, url, scoresArr) {
+
+      function is12345(el, ind, arr) {
+        return el != undefined;
+      }
+
+      if ((name !== "") && (url.match(/\.(jpeg|jpg|gif|png)$/) != null) && (scoresArr.every(is12345) == true)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+
+    }
+
     $("#submit").on("click", function(e) {
 
       e.preventDefault();
+
+
 
       var newFriend = {
         name: $("#input-name").val().trim(),
@@ -183,30 +200,36 @@
         newFriend.scores.push($(this).attr("data-value"));
       });
 
-      $.post("/api/new/friend", newFriend, function(data) {
+      if (isValid(newFriend.name, newFriend.photoURL, newFriend.scores)) {
+        $.post("/api/new/friend", newFriend, function(data) {
 
-        $("#bestmatch-list").empty();
-        
-        var bestmatchArr = data;
+          $("#bestmatch-list").empty();
+          
+          var bestmatchArr = data;
 
-        if (data.length > 5) {
-          bestmatchArr = data.slice(0, 6);
-        }
-        
-        bestmatchArr.map(function(el) {
-          var newDiv = $("<div>").addClass("bestmatch");
-          var newImg = $("<img>").attr("src", el.photoURL)
-                                 .attr("width", "100px")
-                                 .attr("height", "100px");
-          var newP = $("<p>").text(el.name);
-          newDiv.append(newImg).append(newP);
+          if (data.length > 12) {
+            bestmatchArr = data.slice(0, 12);
+          }
+          
+          bestmatchArr.map(function(el) {
+            var newDiv = $("<div>").addClass("bestmatch");
+            var newImg = $("<img>").attr("src", el.photoURL)
+                                   .attr("width", "100px")
+                                   .attr("height", "100px");
+            var newP = $("<p>").text(el.name);
+            newDiv.append(newImg).append(newP);
 
-          $("#bestmatch-list").append(newDiv);
+            $("#bestmatch-list").append(newDiv);
+          });
+
         });
 
-      });
+        $(this).attr("data-toggle", "modal");
+      } else {
+        alert("Please make sure to fill out the entire form and that the link to your photo is a valid image URL (.jpeg, .jpg, .gif, .png).");
+      }
 
-      $(this).attr("data-toggle", "modal");
+      
 
     });
     
