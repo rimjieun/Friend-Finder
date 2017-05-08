@@ -9,7 +9,6 @@ var friendsArr = JSON.parse(json); //array of friends data
 
 module.exports = function(app) {
 
-
   app.get("/api/friends", function(req, res) {
     res.json(friends);
   });
@@ -47,7 +46,6 @@ function bestMatch(friend) {
       var scoreDiff = Math.abs(friendsArr[i].scores[j] - friend.scores[j]);
       totalDiff += scoreDiff;
     }
-
 
     if (totalDiff === maxDiff) {
       var match = {

@@ -23,6 +23,17 @@
     button {
       margin-top: 20px;
     }
+
+    .bestmatch {
+      float: left;
+      margin: 0 20px;
+    }
+
+    #bestmatch-list {
+      overflow: auto;
+
+    }
+
   </style>
 
   <div class="container"> 
@@ -128,13 +139,33 @@
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit">Submit</button>
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit" data-target="#resultModal">Submit</button>
     </form>
     <hr>
     <footer class="footer">
       <a href="/api/friends">API Friends List</a> |
       <a href="">GitHub Repo</a>
     </footer>
+  </div>
+
+  <div class="modal fade" id="resultModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Why don't you try being friends with...</h4>
+        </div>
+        <div class="modal-body">
+          <div id="bestmatch-list">
+            <!-- best matches go here -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
   
   <script>
@@ -154,8 +185,29 @@
       });
 
       $.post("/api/new/friend", newFriend, function(data) {
-        console.log(data);
+
+        $("#bestmatch-list").empty();
+        
+        var bestmatchArr = data;
+
+        if (data.length > 5) {
+          bestmatchArr = data.slice(0, 6);
+        }
+        
+        bestmatchArr.map(function(el) {
+          var newDiv = $("<div>").addClass("bestmatch");
+          var newImg = $("<img>").attr("src", el.photoURL)
+                                 .attr("width", "100px")
+                                 .attr("height", "100px");
+          var newP = $("<p>").text(el.name);
+          newDiv.append(newImg).append(newP);
+
+          $("#bestmatch-list").append(newDiv);
+        });
+
       });
+
+      $(this).attr("data-toggle", "modal");
 
     });
     
