@@ -22,19 +22,17 @@ module.exports = function(app) {
       scores: req.body.scores.map(Number)
     };
 
-    console.log(bestMatch(newFriend));
+    var bestMatchList = bestMatch(newFriend);
 
     friendsArr.push(newFriend);
+
     var data = JSON.stringify(friendsArr, null, 2);
     fs.writeFile("app/data/friends.json", data);
 
-    res.json(req.body);
+    res.json(bestMatchList);
 
   });
 
-  // app.get("/api/bestmatch", function(req, res) {
-  //   res.json(bestMatch());
-  // });
 };
 
 function bestMatch(friend) {
