@@ -29,6 +29,7 @@ module.exports = function(app) {
     fs.writeFile("app/data/friends.json", data);
 
     res.json(bestMatchList);
+    res.redirect("/survey");
 
   });
 
