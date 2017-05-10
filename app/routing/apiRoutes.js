@@ -10,7 +10,7 @@ var friendsArr = JSON.parse(json); //array of friends data
 module.exports = function(app) {
 
   app.get("/api/friends", function(req, res) {
-    res.json(friends);
+    res.json(friendsArr);
   });
 
   app.post("/api/new/friend", function(req, res) {
@@ -29,14 +29,16 @@ module.exports = function(app) {
     fs.writeFile("app/data/friends.json", data);
 
     res.json(bestMatchList);
-    res.redirect("/survey");
+  });
 
+  app.get("/api/new/friend", function(req, res) {
+    res.redirect("/survey")
   });
 
 };
 
 function bestMatch(friend) {
-  var maxDiff = 40;
+  var maxDiff = 10;
   var bestMatch = [];
 
   for (i = 0; i < friendsArr.length; i++) {

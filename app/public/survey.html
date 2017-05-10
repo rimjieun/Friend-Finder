@@ -168,7 +168,7 @@
             <option data-value="5">5 (Strongly Agree)</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit" data-target="#resultModal">Submit</button>
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit">Submit</button>
     </form>
     <hr>
     <footer class="footer">
@@ -182,12 +182,30 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Why don't you try being friends with...</h4>
+          <h3 class="modal-title"><strong>Why don't you try being friends with...</strong></h3>
         </div>
         <div class="modal-body">
           <div id="bestmatch-list">
             <!-- best matches go here -->
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="modal fade" id="errorModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3 class="modal-title"><strong>Failed to submit:</strong></h3>
+        </div>
+        <div class="modal-body">
+          <h4>Please make sure to fill out the entire form and that the link to your photo is a valid image URL (.jpeg, .jpg, .gif, .png).</h4>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -217,8 +235,6 @@
     $("#submit").on("click", function(e) {
 
       e.preventDefault();
-
-
 
       var newFriend = {
         name: $("#input-name").val().trim(),
@@ -254,9 +270,15 @@
 
         });
 
-        $(this).attr("data-toggle", "modal");
+        $(this).attr("data-target", "#resultModal").attr("data-toggle", "modal");
+
+        $("#resultModal").on("hidden.bs.modal", function(){
+          window.location = "/";
+        });
+
       } else {
-        alert("Please make sure to fill out the entire form and that the link to your photo is a valid image URL (.jpeg, .jpg, .gif, .png).");
+        $(this).attr("data-target", "#errorModal").attr("data-toggle", "modal");
+        
       }
 
       
