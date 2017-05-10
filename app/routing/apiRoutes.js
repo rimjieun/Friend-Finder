@@ -31,10 +31,6 @@ module.exports = function(app) {
     res.json(bestMatchList);
   });
 
-  app.get("/api/new/friend", function(req, res) {
-    res.redirect("/survey")
-  });
-
 };
 
 function bestMatch(friend) {
