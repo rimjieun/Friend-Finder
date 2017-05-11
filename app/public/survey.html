@@ -182,7 +182,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title"><strong>Why don't you try being friends with...</strong></h3>
+          <h3 class="modal-title"><strong id="resultTitle">Why don't you try being friends with...</strong></h3>
         </div>
         <div class="modal-body">
           <div id="bestmatch-list">
@@ -250,23 +250,31 @@
         $.post("/api/new/friend", newFriend, function(data) {
 
           $("#bestmatch-list").empty();
-          
-          var bestmatchArr = data;
 
-          if (data.length > 12) {
-            bestmatchArr = data.slice(0, 12);
+          if (data.length === 0) {
+            $("#resultTitle").html("No matches.");
+            $("#bestmatch-list").html("<h4>Please try again after we have more users in the database.</h4>");
           }
           
-          bestmatchArr.map(function(el) {
-            var newDiv = $("<div>").addClass("bestmatch");
-            var newImg = $("<img>").attr("src", el.photoURL)
-                                   .attr("width", "100px")
-                                   .attr("height", "100px");
-            var newP = $("<p>").text(el.name);
-            newDiv.append(newImg).append(newP);
+          else {
+            var bestmatchArr = data;
 
-            $("#bestmatch-list").append(newDiv);
-          });
+            if (data.length > 12) {
+              bestmatchArr = data.slice(0, 12);
+            }
+            
+            bestmatchArr.map(function(el) {
+              var newDiv = $("<div>").addClass("bestmatch");
+              var newImg = $("<img>").attr("src", el.photoURL)
+                                     .attr("width", "100px")
+                                     .attr("height", "100px");
+              var newP = $("<p>").text(el.name);
+              newDiv.append(newImg).append(newP);
+
+              $("#bestmatch-list").append(newDiv);
+            });
+          }
+          
 
         });
 
